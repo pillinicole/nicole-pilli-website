@@ -261,7 +261,6 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:.9rem;border-top:1px sol
 @media (prefers-reduced-motion:no-preference){
   .reveal{opacity:0;transform:translateY(30px);transition:opacity .85s cubic-bezier(.2,.65,.25,1) var(--d,0s),transform .85s cubic-bezier(.2,.65,.25,1) var(--d,0s),translate .35s ease,box-shadow .35s ease,scale .5s ease}
   .reveal.in{opacity:1;transform:none}
-  .drift{will-change:translate}
   nav a{transition:color .2s}
   .btn{transition:background .2s,color .2s,translate .2s ease}
   .contact .resume{transition:translate .2s ease}
@@ -570,11 +569,41 @@ function update(){
     if(r.bottom<-200||r.top>vh+200)return;
     var base=r.top-it.y,c=base+r.height/2,delta=c-vh/2;
     var y=Math.max(-MAX,Math.min(MAX,-delta*it.s));
-    it.y=y;it.el.style.translate='0 '+y.toFixed(1)+'px';
+    it.y=y;it.el.style.translate='0 '+Math.round(y)+'px';
   });
 }
 function req(){if(!ticking){ticking=true;requestAnimationFrame(update)}}
 addEventListener('scroll',req,{passive:true});addEventListener('resize',req);update();
+})();
+</script>
+<script data-autoplay-videos>
+(function(){
+if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;   /* keep click-to-play for people who ask for less motion */
+var pairs=[['vf','vplay'],['lf','lplay'],['pf1','pplay1'],['pf2','pplay2'],['mf1','mplay1'],['mf2','mplay2']];
+pairs.forEach(function(pr){
+  var frame=document.getElementById(pr[0]),btn=document.getElementById(pr[1]);
+  if(!frame||!btn||!('IntersectionObserver' in window))return;
+  var video=null,visible=false,userPaused=false,botPause=false;
+  function start(){
+    if(video)return;
+    btn.click();                              /* builds the muted video and starts it */
+    video=frame.querySelector('video');
+    if(!video)return;
+    video.loop=true;video.muted=video.muted||true;
+    video.addEventListener('pause',function(){if(!botPause)userPaused=true;botPause=false});
+    video.addEventListener('play',function(){userPaused=false});
+  }
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      visible=e.isIntersecting;
+      if(visible){
+        if(!video){start()}
+        else if(video.paused&&!userPaused){var p=video.play();if(p&&p.catch){p.catch(function(){})}}
+      }else if(video&&!video.paused){botPause=true;video.pause()}
+    });
+  },{threshold:.35});
+  io.observe(frame);
+});
 })();
 </script>
 </body>
