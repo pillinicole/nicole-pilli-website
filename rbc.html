@@ -3,7 +3,20 @@
 <head>
 <meta charset="utf-8">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E🏦%3C/text%3E%3C/svg%3E">
-<meta name="description" content="RBC Royal Bank of Canada - payments technologies delivery by Nicole Pilli.">
+<meta name="description" content="Digital payments delivery at RBC: business banking portal, vendor acquisition and SWIFT wire tracking - Nicole Pilli.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Nicole Pilli">
+<meta property="og:title" content="RBC Royal Bank of Canada | Nicole Pilli">
+<meta property="og:description" content="Digital payments delivery at RBC: business banking portal, vendor acquisition and SWIFT wire tracking - Nicole Pilli.">
+<meta property="og:url" content="https://nicole.pilli.info/rbc.html">
+<meta property="og:image" content="https://nicole.pilli.info/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Nicole Pilli standing in front of a product roadmap whiteboard">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="RBC Royal Bank of Canada | Nicole Pilli">
+<meta name="twitter:description" content="Digital payments delivery at RBC: business banking portal, vendor acquisition and SWIFT wire tracking - Nicole Pilli.">
+<meta name="twitter:image" content="https://nicole.pilli.info/og-image.jpg">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>RBC Royal Bank of Canada | Nicole Pilli</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Instrument+Serif&family=Cormorant+Garamond:wght@500&family=Libre+Baskerville:wght@400;700&display=swap">
@@ -293,7 +306,6 @@ footer{padding:32px 0 48px;color:var(--muted);font-size:.9rem;border-top:1px sol
 @media (prefers-reduced-motion:no-preference){
   .reveal{opacity:0;transform:translateY(30px);transition:opacity .85s cubic-bezier(.2,.65,.25,1) var(--d,0s),transform .85s cubic-bezier(.2,.65,.25,1) var(--d,0s),translate .35s ease,box-shadow .35s ease,scale .5s ease}
   .reveal.in{opacity:1;transform:none}
-  .drift{will-change:translate}
   nav a{transition:color .2s}
   .btn{transition:background .2s,color .2s,translate .2s ease}
   .contact .resume{transition:translate .2s ease}
@@ -410,7 +422,7 @@ function update(){
     if(r.bottom<-200||r.top>vh+200)return;
     var base=r.top-it.y,c=base+r.height/2,delta=c-vh/2;
     var y=Math.max(-MAX,Math.min(MAX,-delta*it.s));
-    it.y=y;it.el.style.translate='0 '+y.toFixed(1)+'px';
+    it.y=y;it.el.style.translate='0 '+Math.round(y)+'px';
   });
 }
 function req(){if(!ticking){ticking=true;requestAnimationFrame(update)}}
